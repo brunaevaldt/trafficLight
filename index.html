@@ -69,6 +69,7 @@
                 <select onchange="changeFunction(this.value, 'lane1')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
+                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -81,6 +82,7 @@
                 <select onchange="changeFunction(this.value, 'lane2')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
+                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -93,6 +95,7 @@
                 <select onchange="changeFunction(this.value, 'lane3')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
+                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -125,6 +128,7 @@
 
         const imageOff = "images/off.png";
         const imageUnknown = "images/unknown.png";
+        const imageUnknown2 = "images/unknown2.png";
 
         let delayInSeconds = 1;
         let operationalDelayInSeconds = 3;
@@ -175,6 +179,11 @@
             clearTimeoutsForLane(laneId);
         }
 
+        function unknown2(element, laneId) {
+            element.src = imageUnknown2;
+            clearTimeoutsForLane(laneId);
+        }
+
         function changeFunction(value, elementId) {
             const element = document.getElementById(elementId).getElementsByTagName('img')[0];
             const laneId = elementId.toLowerCase();
@@ -191,6 +200,9 @@
                     break;
                 case 'yellowblinking':
                     yellowBlinking(element, laneId);
+                    break;
+                case 'unknown2':
+                    unknown2(element, laneId);
                     break;
                 default:
                     console.error('Invalid option');
