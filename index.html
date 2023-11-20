@@ -58,6 +58,56 @@
             right: 10px;
             text-align: right;
         }
+
+        /* Style for the toggle switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: .4s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.toggle-slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 
@@ -112,6 +162,24 @@
         <label for="operationalDelayInput" style="color: white;">Operational time (seconds):</label>
         <input type="number" id="operationalDelayInput" value="3" min="0.1" step="0.1">
         <button onclick="applyOperationalDelay()">Apply</button>
+        <br>
+        <span style="color: white; margin-left: 10px;">Switch State</span>
+        <label for="stateSwitch" class="toggle-switch">
+            <input type="checkbox" id="stateSwitch" onchange="toggleState()">
+            <span class="toggle-slider"></span>
+        </label>
+        <br>
+        <label style="color: white;">Switch all lanes:</label>
+        <div class="dropdown">
+            <select onchange="changeAllLanes(this.value)">
+                <option value="off">Off</option>
+                <option value="unknown">Unknown</option>
+                <option value="unknown2">Unknown</option>
+                <option value="operational">Operational</option>
+                <option value="yellowblinking">Yellow Blinking</option>
+            </select>
+        </div>
+
     </div>
 
     <script>
@@ -219,6 +287,54 @@
             const operationalDelayInput = document.getElementById('operationalDelayInput');
             operationalDelayInSeconds = parseFloat(operationalDelayInput.value);
             console.log('New operational delay:', operationalDelayInSeconds);
+        }
+
+        let isOperationalState = true; // Initial state is "Operational"
+
+        function toggleState() {
+            clearAllTimeouts();
+
+            const stateSwitch = document.getElementById('stateSwitch');
+            const dropdownOptions = stateSwitch.checked ? ['off', 'unknown', 'unknown2', 'yellowblinking'] : ['off', 'unknown', 'unknown2', 'operational'];
+
+            // Update dropdown values for all lanes
+            ['lane1', 'lane2', 'lane3'].forEach(laneId => {
+                const dropdown = document.getElementById(laneId).getElementsByTagName('select')[0];
+                updateDropdownOptions(dropdown, dropdownOptions);
+            });
+
+            if (isOperationalState) {
+                // Switching to Blinking Yellow
+                changeFunction('off', 'lane1'); // Lane 2 off
+                changeFunction('off', 'lane3'); // Lane 0 off
+                changeFunction('yellowblinking', 'lane2'); // Lane 1 blinking yellow
+            } else {
+                // Switching to Operational
+                changeFunction('operational', 'lane1'); // Lane 1 operational
+                changeFunction('operational', 'lane2'); // Lane 2 operational
+                changeFunction('operational', 'lane3'); // Lane 0 operational
+            }
+
+            isOperationalState = !isOperationalState; // Toggle the state
+        }
+
+        function updateDropdownOptions(dropdown, options) {
+            // Remove existing options
+            dropdown.innerHTML = '';
+
+            // Add new options
+            options.forEach(optionValue => {
+                const option = document.createElement('option');
+                option.value = optionValue;
+                option.text = optionValue.charAt(0).toUpperCase() + optionValue.slice(1);
+                dropdown.add(option);
+            });
+        }
+
+        function changeAllLanes(value) {
+            changeFunction(value, 'lane1');
+            changeFunction(value, 'lane2');
+            changeFunction(value, 'lane3');
         }
     </script>
 </body>
