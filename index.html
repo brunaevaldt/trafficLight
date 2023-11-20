@@ -290,12 +290,6 @@
             const stateSwitch = document.getElementById('stateSwitch');
             const dropdownOptions = stateSwitch.checked ? ['off', 'unknown', 'yellowblinking'] : ['off', 'unknown', 'operational'];
 
-            // Update dropdown values for all lanes
-            ['lane1', 'lane2', 'lane3'].forEach(laneId => {
-                const dropdown = document.getElementById(laneId).getElementsByTagName('select')[0];
-                updateDropdownOptions(dropdown, dropdownOptions);
-            });
-
             if (isOperationalState) {
                 // Switching to Blinking Yellow
                 changeFunction('off', 'lane1'); // Lane 2 off
@@ -311,18 +305,6 @@
             isOperationalState = !isOperationalState; // Toggle the state
         }
 
-        function updateDropdownOptions(dropdown, options) {
-            // Remove existing options
-            dropdown.innerHTML = '';
-
-            // Add new options
-            options.forEach(optionValue => {
-                const option = document.createElement('option');
-                option.value = optionValue;
-                option.text = optionValue.charAt(0).toUpperCase() + optionValue.slice(1);
-                dropdown.add(option);
-            });
-        }
 
         function changeAllLanes(value) {
             changeFunction(value, 'lane1');
