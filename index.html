@@ -119,7 +119,6 @@
                 <select onchange="changeFunction(this.value, 'lane1')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
-                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -132,7 +131,6 @@
                 <select onchange="changeFunction(this.value, 'lane2')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
-                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -145,7 +143,6 @@
                 <select onchange="changeFunction(this.value, 'lane3')">
                     <option value="off" selected>Off</option>
                     <option value="unknown">Unknown</option>
-                    <option value="unknown2">Unknown</option>
                     <option value="operational">Operational</option>
                     <option value="yellowblinking">Yellow Blinking</option>
                 </select>
@@ -174,7 +171,6 @@
             <select onchange="changeAllLanes(this.value)">
                 <option value="off">Off</option>
                 <option value="unknown">Unknown</option>
-                <option value="unknown2">Unknown</option>
                 <option value="operational">Operational</option>
                 <option value="yellowblinking">Yellow Blinking</option>
             </select>
@@ -196,7 +192,6 @@
 
         const imageOff = "images/off.png";
         const imageUnknown = "images/unknown.png";
-        const imageUnknown2 = "images/unknown2.png";
 
         let delayInSeconds = 1;
         let operationalDelayInSeconds = 3;
@@ -243,14 +238,15 @@
         }
 
         function unknown(element, laneId) {
-            element.src = imageUnknown;
-            clearTimeoutsForLane(laneId);
+            element.src = cycleImagesYellowBlinking[0];
+            timeouts[laneId].push(setTimeout(() => unknownHelper(element, laneId), 0.2 * 1000));
         }
 
-        function unknown2(element, laneId) {
-            element.src = imageUnknown2;
-            clearTimeoutsForLane(laneId);
+        function unknownHelper(element, laneId) {
+            element.src = cycleImagesYellowBlinking[1];
+            timeouts[laneId].push(setTimeout(() => unknown(element, laneId), 0.2 * 1000));
         }
+
 
         function changeFunction(value, elementId) {
             const element = document.getElementById(elementId).getElementsByTagName('img')[0];
@@ -268,9 +264,6 @@
                     break;
                 case 'yellowblinking':
                     yellowBlinking(element, laneId);
-                    break;
-                case 'unknown2':
-                    unknown2(element, laneId);
                     break;
                 default:
                     console.error('Invalid option');
@@ -295,7 +288,7 @@
             clearAllTimeouts();
 
             const stateSwitch = document.getElementById('stateSwitch');
-            const dropdownOptions = stateSwitch.checked ? ['off', 'unknown', 'unknown2', 'yellowblinking'] : ['off', 'unknown', 'unknown2', 'operational'];
+            const dropdownOptions = stateSwitch.checked ? ['off', 'unknown', 'yellowblinking'] : ['off', 'unknown', 'operational'];
 
             // Update dropdown values for all lanes
             ['lane1', 'lane2', 'lane3'].forEach(laneId => {
