@@ -60,6 +60,18 @@ input[type="number"] {
     text-align: right;
 }
 
+/* Add the new styles below */
+#controls label,
+#controls .dropdown {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+#controls .dropdown select {
+    width: auto; /* Allow the dropdown to adjust its width based on content */
+}
+
 /* Style for the toggle switch */
 .toggle-switch {
     position: relative;
