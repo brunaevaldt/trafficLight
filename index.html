@@ -5,110 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Cycle</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            background-color: #333;
-            /* Dark gray background */
-        }
-
-        #lane-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .lane {
-            /* margin: 0 20px; */
-            /* Adjust the margin as needed */
-            color: white;
-            /* Text color for better visibility on dark background */
-            text-align: center;
-            position: relative;
-            padding: 0 30px;
-        }
-
-        .lane img {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: auto;
-        }
-
-        .dropdown {
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        .lane-number {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-        }
-
-        #controls {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            text-align: right;
-        }
-
-        /* Style for the toggle switch */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            border-radius: 34px;
-            transition: .4s;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            border-radius: 50%;
-            transition: .4s;
-        }
-
-        input:checked+.toggle-slider {
-            background-color: #2196F3;
-        }
-
-        input:focus+.toggle-slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked+.toggle-slider:before {
-            transform: translateX(26px);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -152,11 +49,11 @@
     </div>
 
     <div id="controls">
-        <label for="delayInput" style="color: white;">Yellow time (seconds):</label>
-        <input type="number" id="delayInput" value="1" min="0.1" step="0.1">
+        <label for="delayInput" style="color: white;">Yellow time (secs):</label>
+        <input type="number" id="delayInput" value="1" min="0.1" step="0.1" width="10px">
         <button onclick="applyYellowDelay()">Apply</button>
         <br>
-        <label for="operationalDelayInput" style="color: white;">Operational time (seconds):</label>
+        <label for="operationalDelayInput" style="color: white;">Operational time (secs):</label>
         <input type="number" id="operationalDelayInput" value="3" min="0.1" step="0.1">
         <button onclick="applyOperationalDelay()">Apply</button>
         <br>
