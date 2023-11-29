@@ -9,9 +9,18 @@ body {
     /* Dark gray background */
 }
 
+input[type="number"] {
+    font-size: 10px; /* Adjust the font size as needed */
+    padding: 5px;    /* Adjust the padding as needed */
+    width: 30px;     /* Adjust the width as needed */
+}
+
 #lane-container {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Adjust spacing between lanes */
+    max-width: 800px; /* Set a maximum width for the lane container */
+    margin: 0 auto; /* Center the lane container */
 }
 
 .lane {
@@ -22,7 +31,7 @@ body {
 }
 
 .lane img {
-    width: 67%;
+    max-width: 75%; /* Adjust the max-width to control the width of the images */
     height: auto;
     display: block;
     margin: auto;
